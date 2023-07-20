@@ -6,3 +6,8 @@ Hello World Flask App
 ```
 docker build -t <docker_hub_repo>/flask-app .
 ```
+
+Run Image
+```
+docker run -d -p 5000:5000 --name flask-app <docker_hub_repo>/flask-app
+```
