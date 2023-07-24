@@ -9,7 +9,5 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: flask-app-http
-      protocol: TCP
-      name: http
   selector:
     {{- include "helm-flask-app.selectorLabels" . | nindent 4 }}

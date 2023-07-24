@@ -6,9 +6,9 @@ replicaCount: 3
 
 image:
   repository: nifeoluyemi/flask-app
-  pullPolicy: Latest
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.1.0-arm64"
 
 imagePullSecrets: []
 nameOverride: "helloworld-flask-app"
@@ -37,7 +37,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: NodePort
+  type: LoadBalancer
   port: 5000
   targetPort: 5000
 

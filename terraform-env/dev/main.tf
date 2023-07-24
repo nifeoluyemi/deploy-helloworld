@@ -43,3 +43,16 @@ module "node_group" {
   kubernetes_version       = var.kubernetes_version
   instance_types           = var.instance_types
 }
+
+
+# install flask-app
+
+locals {
+ chart_path = format("%s/%s", abspath("${path.module}/../.."), "helm-flask-app") 
+}
+
+module "helm-flask-app" {
+  source = "../../terraform-module/flask-app-bootstrap"
+
+  chart_path = local.chart_path
+}
