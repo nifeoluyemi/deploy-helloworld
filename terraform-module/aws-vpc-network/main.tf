@@ -57,16 +57,17 @@ resource "aws_nat_gateway" "nat_gateway" {
     }
   )
 
-  depends_on = [ aws_internet_gateway.igw ]
+  depends_on = [ 
+    aws_internet_gateway.igw
+  ]
 }
-
 
 resource "aws_route_table" "public" {
   vpc_id = var.vpc_id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat_gateway.id
+    gateway_id = aws_internet_gateway.igw.id
   }
 
   tags = merge(
@@ -101,7 +102,7 @@ resource "aws_subnet" "private" {
     var.elb_private_subnet_tags,
     {
       Name                                                                        = "${var.tags.service}-${var.tags.environment}-private-subnet-${count.index}"
-      description                                                                 = "Private subnet for EKS nodegroup"
+      description                                                                 = "Private subnet for EKS node-group"
       "kubernetes.io/cluster/${var.tags.service}-${var.tags.environment}-cluster" = "owned"
     }
   )
