@@ -7,8 +7,6 @@ resource "aws_eks_cluster" "helloworld" {
   role_arn = aws_iam_role.control_plane_role.arn
 
   vpc_config {
-    endpoint_private_access   = true
-    endpoint_public_access    = true
     subnet_ids             = var.subnet_ids
     public_access_cidrs    = var.public_access_cidrs
   }

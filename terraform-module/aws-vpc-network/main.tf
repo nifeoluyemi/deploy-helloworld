@@ -132,3 +132,37 @@ resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
+
+
+# Security group for public subnet
+resource "aws_security_group" "public_sg" {
+  name   = "${var.tags.service}-${var.tags.environment}-public-sg"
+  vpc_id = var.vpc_id
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.tags.service}-${var.tags.environment}-public-sg"
+    }
+    
+  )
+}
+
+# Security group traffic rules
+resource "aws_security_group_rule" "sg_ingress_public_443" {
+  security_group_id = aws_security_group.public_sg.id
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "sg_ingress_public_80" {
+  security_group_id = aws_security_group.public_sg.id
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
