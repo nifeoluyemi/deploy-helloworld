@@ -69,8 +69,8 @@ variable "node_groups_scaling" {
     min_size     = number
   })
   default = {
-    desired_size = 1
-    max_size     = 1
+    desired_size = 2
+    max_size     = 2
     min_size     = 1
   }
   description = "Node group scaling settings"

@@ -2,6 +2,7 @@
 
 This is a Hello World project 
 
+![alt text](https://github.com/nifeoluyemi/graylog-helloworld/blob/main/media/ui.png)
 
 ## Running this project
 
@@ -30,7 +31,24 @@ export AWS_SECRET_ACCESS_KEY="<TERRAFORM_AWS_SECRET_ACCESS_KEY>"
 #### Deploy resources
 
 ```
-terraform init
-terraform plan
-terraform apply
+$ terraform init
+$ terraform plan
+$ terraform apply
 ```
+
+### View the python app
+Login to AWS CLI on your terminal
+```
+$ aws configure
+```
+
+Run the following commands:
+```
+$ aws eks update-kubeconfig --region us-east-1 --name helloworld-dev-cluster
+
+$ export SERVICE_IP=$(kubectl get svc --namespace default helloworld-flask-app-service --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}")
+
+$ echo http://$SERVICE_IP:80  
+```
+
+Copt the url and patse in browser
