@@ -4,6 +4,21 @@ This is a Hello World project
 
 ![alt text](https://github.com/nifeoluyemi/graylog-helloworld/blob/main/media/ui.png)
 
+## Resources
+The following terraform code deploys a Helloworld flask application to an EKS cluster in AWS VPC
+
+#### Resources to be deployed
+- AWS VPC
+- Two Public and Two Private Subnets in different availability zones (us-east1a/b)
+- Internet Gateway to provide internet access for services within the VPC
+- NAT Gateway for public subnets
+- Routing Tables and associate subnets with them
+- Security Groups with associated subnets and Security Group rules
+- EKS Cluster with IAM Roles and Policies
+- EKS Node Group for application workload with IAM Roles and Policies
+- Helm chart to install Helloworld Flask Application
+
+
 ## Running this project
 
 #### Prerequisites
@@ -15,6 +30,19 @@ This is a Hello World project
 
 4. Create Terraform IAM User with Access Key and Secret Key - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
 
+### Create s3 bucket for terraform backend
+In AWS management console, create an S3 bucket with folder structure `terraform/state`. See terraform backend code below:
+```
+terraform {
+  backend "s3" {
+    bucket         = "<REDACTED>"
+    key            = "terraform/state/tfstate"
+    region         = "<REDACTED>"
+  }
+}
+```
+
+
 ### Running Terraform
 From the project root, change directory into the terraform workspace
 ```
@@ -22,7 +50,7 @@ cd terraform-env/dev
 ```
 
 #### Export IAM user credentials
-Export AWS terraform IAM user credentials to cli
+Export AWS terraform IAM user credentials to CLI before running terraform:
 ```
 export AWS_ACCESS_KEY_ID="<TERRAFORM_AWS_ACCESS_KEY_ID>"
 export AWS_SECRET_ACCESS_KEY="<TERRAFORM_AWS_SECRET_ACCESS_KEY>"
@@ -51,4 +79,4 @@ $ export SERVICE_IP=$(kubectl get svc --namespace default helloworld-flask-app-s
 $ echo http://$SERVICE_IP:80  
 ```
 
-Copt the url and patse in browser
+Copy the url and patse in browser
