@@ -1,8 +1,6 @@
-# Graylog Helloworld
+# Deploy Helloworld
 
 This is a Hello World project 
-
-![alt text](https://github.com/nifeoluyemi/graylog-helloworld/blob/main/media/ui.png)
 
 ## Resources
 The following terraform code deploys a Helloworld flask application to an EKS cluster in AWS VPC
